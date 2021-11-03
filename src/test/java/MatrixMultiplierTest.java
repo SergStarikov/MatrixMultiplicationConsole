@@ -1,21 +1,20 @@
 import com.starykov.data.Matrix;
 import com.starykov.exception.MatrixException;
-import com.starykov.util.MatrixUtil;
-import com.starykov.util.Printer;
+import com.starykov.util.MatrixMultiplier;
 import com.starykov.validation.Validation;
 import org.junit.Assert;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
-import static com.starykov.util.StringConstants.MATRIX_NULL_OR_EMPTY;
-import static com.starykov.util.StringConstants.WRONG_DIMENSION_ERROR_MESSAGE;
+import static com.starykov.data.StringConstants.MATRIX_NULL_OR_EMPTY;
+import static com.starykov.data.StringConstants.WRONG_DIMENSION_ERROR_MESSAGE;
 
-public class MatrixUtilTest {
+public class MatrixMultiplierTest {
 
-    private Matrix matrix_2x3 = new Matrix(2, 3);
-    private Matrix matrix_3x2 = new Matrix(3, 2);
-    private Matrix matrix_2x2 = new Matrix(2, 2);
+    private final Matrix matrix_2x3 = new Matrix(2, 3);
+    private final Matrix matrix_3x2 = new Matrix(3, 2);
+    private final Matrix matrix_2x2 = new Matrix(2, 2);
 
     public void fillTestMatrix() {
         matrix_2x3.getMatrix()[0][0] = 1f;
@@ -42,7 +41,7 @@ public class MatrixUtilTest {
     @Test
     public void shouldCorrectMultiplication() {
         fillTestMatrix();
-        Matrix resultMatrix = new MatrixUtil().matrixMultiplication(matrix_2x3, matrix_3x2);
+        Matrix resultMatrix = new MatrixMultiplier().multiplyMatrixs(matrix_2x3, matrix_3x2);
 
         for (int i = 0; i < resultMatrix.getMatrix().length; i++) {
             Assert.assertArrayEquals(resultMatrix.getMatrix()[i], matrix_2x2.getMatrix()[i], 0.1f);
@@ -52,7 +51,7 @@ public class MatrixUtilTest {
     @Test
     public void shouldCorrectMultiplicationByThreads() throws InterruptedException {
         fillTestMatrix();
-        Matrix resultMatrix = new MatrixUtil().matrixMultiplicationByThreads(matrix_2x3, matrix_3x2, 4);
+        Matrix resultMatrix = new MatrixMultiplier().multiplyMatrixsByThreads(matrix_2x3, matrix_3x2, 4);
 
         for (int i = 0; i < resultMatrix.getMatrix().length; i++) {
             Assert.assertArrayEquals(resultMatrix.getMatrix()[i], matrix_2x2.getMatrix()[i], 0.1f);

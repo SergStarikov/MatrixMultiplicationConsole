@@ -3,15 +3,13 @@ package com.starykov.validation;
 import com.starykov.data.Matrix;
 import com.starykov.exception.MatrixException;
 
-import java.text.MessageFormat;
-
-import static com.starykov.util.StringConstants.MATRIX_NULL_OR_EMPTY;
-import static com.starykov.util.StringConstants.WRONG_DIMENSION_ERROR_MESSAGE;
+import static com.starykov.data.StringConstants.MATRIX_NULL_OR_EMPTY;
+import static com.starykov.data.StringConstants.WRONG_DIMENSION_ERROR_MESSAGE;
 
 public class Validation {
 
     public void isRowEqualColumn(Matrix firstMatrix, Matrix secondMatrix) throws MatrixException {
-        if(firstMatrix.getMatrixRow() != secondMatrix.getMatrixColumn()){
+        if(firstMatrix.getMatrixRows() != secondMatrix.getMatrixColumns()){
             throw new MatrixException(WRONG_DIMENSION_ERROR_MESSAGE);
         }
     }

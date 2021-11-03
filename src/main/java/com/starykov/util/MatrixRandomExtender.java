@@ -6,23 +6,25 @@ import java.util.Random;
 
 public class MatrixRandomExtender implements MatrixExtender {
 
-    private Random random = new Random();
+    private final Random random = new Random();
 
     public Matrix fillMatrix(Matrix matrix) {
-        for (int i = 0; i < matrix.getMatrixRow(); i++) {
-            for (int j = 0; j < matrix.getMatrixColumn(); j++) {
+        for (int i = 0; i < matrix.getMatrixRows(); i++) {
+            for (int j = 0; j < matrix.getMatrixColumns(); j++) {
                 matrix.getMatrix()[i][j] = getRandomFloatBetweenRangeFromProp();
             }
         }
         return matrix;
     }
 
-    private float getRandomFloatBetweenRange(float min, float max){
-        float x = (float) ((random.nextFloat()*((max-min)+1))+min);
-        return x;
+    private float getRandomFloatBetweenRange(float min, float max) {
+        return ((random.nextFloat() * ((max - min) + 1)) + min);
     }
 
-    private float getRandomFloatBetweenRangeFromProp(){
-        return getRandomFloatBetweenRange(Float.parseFloat(PropReader.INSTANCE.getProperty("min")), Float.parseFloat(PropReader.INSTANCE.getProperty("max")));
+    private float getRandomFloatBetweenRangeFromProp() {
+        return getRandomFloatBetweenRange(
+                Float.parseFloat(PropReader.INSTANCE.getProperty("min_number")),
+                Float.parseFloat(PropReader.INSTANCE.getProperty("max_number"))
+        );
     }
 }

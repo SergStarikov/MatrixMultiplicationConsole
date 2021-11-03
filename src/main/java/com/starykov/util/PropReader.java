@@ -8,12 +8,13 @@ import java.util.Properties;
 public enum PropReader {
     INSTANCE;
     private final Properties properties;
-    private final Logger logger = Logger.getLogger(PropReader.class);
+
     PropReader() {
         properties = new Properties();
         try {
             properties.load(getClass().getClassLoader().getResourceAsStream("Prop.properties"));
         } catch (IOException e) {
+            Logger logger = Logger.getLogger(PropReader.class);
             logger.error(e.getMessage());
         }
     }
@@ -21,6 +22,4 @@ public enum PropReader {
     public String getProperty(String property) {
         return properties.getProperty(property);
     }
-
-
 }

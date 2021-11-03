@@ -1,45 +1,33 @@
 package com.starykov.data;
 
 public class Matrix {
-    private float[][] matrix;
-    private int matrixRow;
-    private int matrixColumn;
+    private final float[][] matrix;
+    private final int matrixRows;
+    private final int matrixColumns;
 
-    public Matrix(int matrixRow, int matrixColumn) {
-        this.matrixRow = matrixRow;
-        this.matrixColumn = matrixColumn;
-        this.matrix = new float[matrixRow][matrixColumn];
+    public Matrix(int matrixRows, int matrixColumns) {
+        this.matrixRows = matrixRows;
+        this.matrixColumns = matrixColumns;
+        this.matrix = new float[matrixRows][matrixColumns];
     }
 
     public float[][] getMatrix() {
         return matrix;
     }
 
-    public void setMatrix(float[][] matrix) {
-        this.matrix = matrix;
+    public int getMatrixRows() {
+        return matrixRows;
     }
 
-    public int getMatrixRow() {
-        return matrixRow;
-    }
-
-    public void setMatrixRow(int matrixRow) {
-        this.matrixRow = matrixRow;
-    }
-
-    public int getMatrixColumn() {
-        return matrixColumn;
-    }
-
-    public void setMatrixColumn(int matrixColumn) {
-        this.matrixColumn = matrixColumn;
+    public int getMatrixColumns() {
+        return matrixColumns;
     }
 
     @Override
     public String toString() {
         return "Matrix{" +
-                "Row=" + matrixRow +
-                " Column=" + matrixColumn +
+                "Rows=" + matrixRows +
+                " Columns=" + matrixColumns +
                 '}';
     }
 }
