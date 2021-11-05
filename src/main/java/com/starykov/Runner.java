@@ -22,31 +22,31 @@ public class Runner {
 
     public void runApp(){
 
-        int rows = Integer.parseInt(PropReader.INSTANCE.getProperty("rows"));
-        int columns = Integer.parseInt(PropReader.INSTANCE.getProperty("columns"));
+        int rows = getPropertyByName("rows");
+        int columns = getPropertyByName("columns");
 
-        Matrix matrix_1 = new Matrix(rows, columns);
-        Matrix matrix_2 = new Matrix(rows, columns);
+        Matrix firstMatrix = new Matrix(rows, columns);
+        Matrix secondMatrix = new Matrix(rows, columns);
 
         try {
-            validation.isMatrixEmptyOrNull(matrix_1);
-            validation.isMatrixEmptyOrNull(matrix_2);
-            extender.fillMatrix(matrix_1);
-            extender.fillMatrix(matrix_2);
+            validation.isMatrixEmptyOrNull(firstMatrix);
+            validation.isMatrixEmptyOrNull(secondMatrix);
+            extender.fillMatrix(firstMatrix);
+            extender.fillMatrix(secondMatrix);
 
             printer.printMessage("Multiplication matrices in one thread");
 
-            validation.isRowEqualColumn(matrix_1, matrix_2);
+            validation.isRowEqualColumn(firstMatrix, secondMatrix);
 
             Instant start = Instant.now();
-            multiplier.multiplyMatrixs(matrix_1, matrix_2);
+            multiplier.multiplyMatrices(firstMatrix, secondMatrix);
             Instant finish = Instant.now();
             long timeElapsed = Duration.between(start, finish).toMillis();
             printer.printMessageWithParams(TIME_ELAPSED, timeElapsed);
 
             printer.printMessage("Multiplication matrices in several threads");
             start = Instant.now();
-            multiplier.multiplyMatrixsByThreads(matrix_1, matrix_2, Integer.parseInt(PropReader.INSTANCE.getProperty("threadCount")));
+            multiplier.multiplyMatricesByThreads(firstMatrix, secondMatrix, getPropertyByName("threadCounts"));
             finish = Instant.now();
             timeElapsed = Duration.between(start, finish).toMillis();
             printer.printMessageWithParams(TIME_ELAPSED, timeElapsed);
@@ -58,5 +58,9 @@ public class Runner {
         catch (Exception e){
             logger.error("Unexpected exception " + e.getMessage());
         }
+    }
+
+    private int getPropertyByName(String propertyName) {
+        return Integer.parseInt(PropReader.INSTANCE.getProperty(propertyName));
     }
 }

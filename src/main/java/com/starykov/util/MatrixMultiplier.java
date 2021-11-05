@@ -5,7 +5,7 @@ import com.starykov.data.MatrixThread;
 
 public class MatrixMultiplier {
 
-    public Matrix multiplyMatrixs(Matrix firstMatrix, Matrix secondMatrix) {
+    public Matrix multiplyMatrices(Matrix firstMatrix, Matrix secondMatrix) {
         Matrix multiplicandMatrix = new Matrix(firstMatrix.getMatrixRows(), secondMatrix.getMatrixColumns());
         for (int i = 0; i < firstMatrix.getMatrixRows(); i++) {
             for (int j = 0; j < secondMatrix.getMatrixColumns(); j++) {
@@ -17,7 +17,7 @@ public class MatrixMultiplier {
         return multiplicandMatrix;
     }
 
-    public Matrix multiplyMatrixsByThreads(Matrix firstMatrix, Matrix secondMatrix, int threadCount) throws InterruptedException {
+    public Matrix multiplyMatricesByThreads(Matrix firstMatrix, Matrix secondMatrix, int threadCount) throws InterruptedException {
         Matrix multiplicandMatrix = new Matrix(firstMatrix.getMatrixRows(), secondMatrix.getMatrixColumns());
 
         if (threadCount > multiplicandMatrix.getMatrixRows()){
@@ -29,7 +29,7 @@ public class MatrixMultiplier {
         MatrixThread[] matrixThreads = new MatrixThread[threadCount];
         for (int i = threadCount - 1; i >= 0; --i) {
             int endIndex = startIndex + cellsToThread;
-            if (endIndex == 0) {
+            if ((firstMatrix.getMatrixRows() * secondMatrix.getMatrixColumns()) - endIndex == 1) {
                 endIndex = firstMatrix.getMatrixRows() * secondMatrix.getMatrixColumns();
             }
 
@@ -41,6 +41,7 @@ public class MatrixMultiplier {
         for (MatrixThread matrixThread : matrixThreads) {
             matrixThread.join();
         }
+
         return multiplicandMatrix;
     }
 }
