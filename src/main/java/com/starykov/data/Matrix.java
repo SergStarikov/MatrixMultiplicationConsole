@@ -1,5 +1,10 @@
 package com.starykov.data;
 
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+
+@Getter
+@EqualsAndHashCode
 public class Matrix {
     private final float[][] matrix;
     private final int matrixRows;
@@ -9,18 +14,6 @@ public class Matrix {
         this.matrixRows = matrixRows;
         this.matrixColumns = matrixColumns;
         this.matrix = new float[matrixRows][matrixColumns];
-    }
-
-    public float[][] getMatrix() {
-        return matrix;
-    }
-
-    public int getMatrixRows() {
-        return matrixRows;
-    }
-
-    public int getMatrixColumns() {
-        return matrixColumns;
     }
 
     @Override

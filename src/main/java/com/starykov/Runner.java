@@ -4,21 +4,19 @@ import com.starykov.data.Matrix;
 import com.starykov.exception.MatrixException;
 import com.starykov.util.*;
 import com.starykov.validation.Validation;
-import org.apache.log4j.Logger;
+import lombok.extern.slf4j.Slf4j;
 
 import java.time.Duration;
 import java.time.Instant;
 
 import static com.starykov.data.StringConstants.TIME_ELAPSED;
 
+@Slf4j
 public class Runner {
-
-    private static final Logger logger = Logger.getLogger(Runner.class);
 
     private final MatrixExtender extender = new MatrixRandomExtender();
     private final Validation validation = new Validation();
     private final MatrixMultiplier multiplier = new MatrixMultiplier();
-    private final Printer printer = new Printer();
 
     public void runApp(){
 
@@ -34,7 +32,7 @@ public class Runner {
             extender.fillMatrix(firstMatrix);
             extender.fillMatrix(secondMatrix);
 
-            printer.printMessage("Multiplication matrices in one thread");
+            log.info("Multiplication matrices in one thread");
 
             validation.isRowEqualColumn(firstMatrix, secondMatrix);
 
@@ -42,21 +40,21 @@ public class Runner {
             multiplier.multiplyMatrices(firstMatrix, secondMatrix);
             Instant finish = Instant.now();
             long timeElapsed = Duration.between(start, finish).toMillis();
-            printer.printMessageWithParams(TIME_ELAPSED, timeElapsed);
+            log.info(TIME_ELAPSED, timeElapsed);
 
-            printer.printMessage("Multiplication matrices in several threads");
+            log.info("Multiplication matrices in {} threads", getPropertyByName("threadCounts"));
             start = Instant.now();
             multiplier.multiplyMatricesByThreads(firstMatrix, secondMatrix, getPropertyByName("threadCounts"));
             finish = Instant.now();
             timeElapsed = Duration.between(start, finish).toMillis();
-            printer.printMessageWithParams(TIME_ELAPSED, timeElapsed);
+            log.info(TIME_ELAPSED, timeElapsed);
 
         } catch (MatrixException | InterruptedException e) {
-            logger.error(e.getMessage());
+            log.error(e.getMessage());
             Thread.currentThread().interrupt();
         }
         catch (Exception e){
-            logger.error("Unexpected exception " + e.getMessage());
+            log.error("Unexpected exception {}", e.getMessage());
         }
     }
 

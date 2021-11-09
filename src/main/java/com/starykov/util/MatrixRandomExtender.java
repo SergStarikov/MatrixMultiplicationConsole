@@ -8,13 +8,12 @@ public class MatrixRandomExtender implements MatrixExtender {
 
     private final Random random = new Random();
 
-    public Matrix fillMatrix(Matrix matrix) {
+    public void fillMatrix(Matrix matrix) {
         for (int i = 0; i < matrix.getMatrixRows(); i++) {
             for (int j = 0; j < matrix.getMatrixColumns(); j++) {
                 matrix.getMatrix()[i][j] = getRandomFloatBetweenRangeFromProp();
             }
         }
-        return matrix;
     }
 
     private float getRandomFloatBetweenRange(float min, float max) {
